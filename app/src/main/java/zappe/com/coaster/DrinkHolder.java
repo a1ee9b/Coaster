@@ -13,7 +13,9 @@ public class DrinkHolder {
     private static final List<PropertyChangeListener> listener = new ArrayList<PropertyChangeListener>();
 
     public static final String AMOUNT = "amount";
+    public static final String COSTS = "costs";
     public static final String ADDED = "added";
+    public static final String REMOVED = "removed";
 
     public DrinkHolder() {
         drinks = new ArrayList<DrinkModel>();
@@ -27,6 +29,10 @@ public class DrinkHolder {
         return drinks;
     }
 
+    public DrinkModel get(int i) {
+        return drinks.get(i);
+    }
+
     public DrinkHolder add(DrinkModel drink) {
         drinks.add(drink);
 
@@ -37,7 +43,18 @@ public class DrinkHolder {
 
         return this;
     }
-    
+
+    public DrinkHolder remove(DrinkModel drink) {
+        drinks.remove(drink);
+
+        notifyListeners(this,
+                REMOVED,
+                drink.toString(),
+                "");
+
+        return this;
+    }
+
     public double getTotalWithoutTip() {
         double total = 0;
         for (int i = 0; i < drinks.size(); i++) {
@@ -68,11 +85,37 @@ public class DrinkHolder {
 
         public int increaseCount() {
             notifyListeners(this,
-                    AMOUNT,
-                    String.valueOf(this.count),
-                    String.valueOf(this.count = count+1));
+                AMOUNT,
+                String.valueOf(this.count),
+                String.valueOf(this.count = count+1));
 
             return this.count;
+        }
+
+        public int editCount(int i) {
+            this.count = i;
+
+            notifyListeners(this,
+                    AMOUNT,
+                    String.valueOf(this.count),
+                    String.valueOf(i));
+
+            return this.count;
+        }
+
+        public double editCost(double costs) {
+            double previousCosts = this.costs;
+
+            if (costs > 0) {
+                this.costs = costs;
+
+                notifyListeners(this,
+                    AMOUNT,
+                    String.valueOf(previousCosts),
+                    String.valueOf(costs));
+            }
+
+            return costs;
         }
 
         private void notifyListeners(Object object, String property, String oldValue, String newValue) {

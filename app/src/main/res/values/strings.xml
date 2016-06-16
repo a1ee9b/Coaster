@@ -2,4 +2,12 @@
     <string name="app_name">Coaster</string>
     <string name="drink">Getränk</string>
     <string name="costs">Preis</string>
+    <string name="without_tip">Ohne Trinkgeld</string>
+    <string name="zero_price">0€</string>
+    <string name="total">Total</string>
+    <string name="initial_amount">1</string>
+    <string name="add">Hinzufügen</string>
+    <string name="change_amount">Menge ändern</string>
+    <string name="change_costs">Preis ändern</string>
+    <string name="delete">Löschen</string>
 </resources>
