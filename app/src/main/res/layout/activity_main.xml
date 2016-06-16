@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="zappe.com.coaster.MainActivity"
+    android:orientation="vertical"
+    android:weightSum="1">
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/addDrinkName"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="top|center"
+        android:hint="@string/drink" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/addDrinkCosts"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="top|center"
+        android:hint="@string/costs"
+        android:inputType="numberDecimal" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Hinzufügen"
+        android:id="@+id/addDrinkButton"
+        android:layout_gravity="center_horizontal"
+        android:onClick="addDrink" />
+
+    <GridView
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:id="@+id/drinkGrid"
+        android:layout_alignParentStart="false"
+        android:numColumns="auto_fit"
+        android:layout_above="@+id/linearLayout"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="20dp"
+        android:horizontalSpacing="20dp"
+        android:layout_rowWeight="1.0"
+        android:layout_weight="1" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:id="@+id/linearLayout"
+        android:layout_gravity="bottom">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Ohne Trinkgeld"
+            android:id="@+id/textView2"
+            android:paddingRight="10dp"
+            android:layout_gravity="center_vertical" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="0€"
+            android:id="@+id/totalWithoutTip"
+            android:layout_gravity="center_vertical" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Total"
+            android:id="@+id/textView"
+            android:layout_alignEnd="@+id/drinkGrid"
+            android:paddingRight="10dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="0€"
+            android:id="@+id/totalTextView"
+            android:layout_gravity="center_vertical|right" />
+    </LinearLayout>
+
+</LinearLayout>
