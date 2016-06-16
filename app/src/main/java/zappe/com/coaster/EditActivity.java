@@ -67,7 +67,7 @@ public class EditActivity extends AppCompatActivity {
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra("drink", drink);
         intent.putExtra("position", position);
-        setResult(MainActivity.DELETE, intent);
+        setResult(MainActivity.DELETE_RESULT, intent);
         finish();
     }
 }
