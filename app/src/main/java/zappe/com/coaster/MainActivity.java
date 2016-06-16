@@ -1,11 +1,9 @@
 package zappe.com.coaster;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.ContextMenu;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.TextView;
@@ -22,6 +20,10 @@ public class MainActivity extends AppCompatActivity implements PropertyChangeLis
     TextView total, totalWithoutTip, addDrinkName, addDrinkCosts;
     Button addDrinkButton;
     DrinkHolder drinks;
+    DrinkAdapter adapter;
+
+    public final static int EDIT_RESULT = 1;
+    public final static int DELETE = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,39 +42,54 @@ public class MainActivity extends AppCompatActivity implements PropertyChangeLis
 
         GridView drinkGrid = (GridView) findViewById(R.id.drinkGrid);
         if(drinkGrid != null) {
-            drinkGrid.setAdapter(new DrinkAdapter(this, drinks.getDrinkList()));
+            adapter = new DrinkAdapter(this, drinks.getDrinkList());
+            drinkGrid.setAdapter(adapter);
         }
 
-        drinks.getDrinkList().get(1).editCost(2.32);
+        drinks.getDrinkList().get(1).setCost(2.32);
     }
 
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-        super.onCreateContextMenu(menu, v, menuInfo);
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        DrinkModel drink = (DrinkModel) data.getExtras().getSerializable("drink");
+        int position = data.getIntExtra("position", -1);
 
-        getMenuInflater().inflate(R.menu.drink_menu, menu);
-        menu.setHeaderTitle("Bearbeite das Getränk");
-    }
+        if (resultCode == EDIT_RESULT) {
+            drinks.get(position).update(drink);
+        } else if (resultCode == DELETE) {
+            drinks.remove(position);
+            adapter.notifyDataSetChanged();
 
-    @Override
-    public boolean onContextItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_change_amount:
-//                drink.editCount()
-                Toast.makeText(this, "Menge gewählt", Toast.LENGTH_LONG).show();
-                break;
-
-            case R.id.action_change_costs:
-                Toast.makeText(this, "Preis gewählt", Toast.LENGTH_LONG).show();
-                break;
-
-            case R.id.action_delete_drink:
-                Toast.makeText(this, "Löschen gewählt", Toast.LENGTH_LONG).show();
-                break;
+            Toast.makeText(this, "delete", Toast.LENGTH_LONG).show();
         }
-
-        return super.onContextItemSelected(item);
     }
+
+//    @Override
+//    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+//        super.onCreateContextMenu(menu, v, menuInfo);
+//
+//        getMenuInflater().inflate(R.menu.drink_menu, menu);
+//        menu.setHeaderTitle("Bearbeite das Getränk");
+//    }
+//
+//    @Override
+//    public boolean onContextItemSelected(MenuItem item) {
+//        switch (item.getItemId()) {
+//            case R.id.action_change_amount:
+////                drink.setCount()
+//                Toast.makeText(this, "Menge gewählt", Toast.LENGTH_LONG).show();
+//                break;
+//
+//            case R.id.action_change_costs:
+//                Toast.makeText(this, "Preis gewählt", Toast.LENGTH_LONG).show();
+//                break;
+//
+//            case R.id.action_delete_drink:
+//                Toast.makeText(this, "Löschen gewählt", Toast.LENGTH_LONG).show();
+//                break;
+//        }
+//
+//        return super.onContextItemSelected(item);
+//    }
 
     private void calculateTotals() {
         double totalAmount = drinks.getTotal();

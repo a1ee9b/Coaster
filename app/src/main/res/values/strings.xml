@@ -10,4 +10,6 @@
     <string name="change_amount">Menge ändern</string>
     <string name="change_costs">Preis ändern</string>
     <string name="delete">Löschen</string>
+    <string name="amount">Menge</string>
+    <string name="save">Speichern</string>
 </resources>

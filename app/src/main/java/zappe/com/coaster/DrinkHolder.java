@@ -2,6 +2,7 @@ package zappe.com.coaster;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,8 +13,8 @@ public class DrinkHolder {
     ArrayList<DrinkModel> drinks;
     private static final List<PropertyChangeListener> listener = new ArrayList<PropertyChangeListener>();
 
-    public static final String AMOUNT = "amount";
-    public static final String COSTS = "costs";
+    public static final String AMOUNT = "amountView";
+    public static final String COSTS = "costsView";
     public static final String ADDED = "added";
     public static final String REMOVED = "removed";
 
@@ -44,8 +45,8 @@ public class DrinkHolder {
         return this;
     }
 
-    public DrinkHolder remove(DrinkModel drink) {
-        drinks.remove(drink);
+    public DrinkHolder remove(int i) {
+        DrinkModel drink = drinks.remove(i);
 
         notifyListeners(this,
                 REMOVED,
@@ -72,7 +73,7 @@ public class DrinkHolder {
         return total*tip;
     }
 
-    public static final class DrinkModel {
+    public static final class DrinkModel implements Serializable {
         String name;
         double costs;
         int count;
@@ -81,6 +82,14 @@ public class DrinkHolder {
             this.name = name;
             this.costs = costs;
             this.count = count;
+        }
+
+        public DrinkModel update(DrinkModel drink) {
+            this.setName(drink.name);
+            this.setCost(drink.costs);
+            this.setCount(drink.count);
+
+            return this;
         }
 
         public int increaseCount() {
@@ -92,7 +101,17 @@ public class DrinkHolder {
             return this.count;
         }
 
-        public int editCount(int i) {
+        public String setName(String name) {
+            if (!name.isEmpty()) {
+                notifyListeners(this,
+                        AMOUNT,
+                        this.name,
+                        this.name = name);
+            }
+
+            return name;
+        }
+        public int setCount(int i) {
             this.count = i;
 
             notifyListeners(this,
@@ -103,7 +122,7 @@ public class DrinkHolder {
             return this.count;
         }
 
-        public double editCost(double costs) {
+        public double setCost(double costs) {
             double previousCosts = this.costs;
 
             if (costs > 0) {
@@ -122,6 +141,11 @@ public class DrinkHolder {
             for (PropertyChangeListener name : listener) {
                 name.propertyChange(new PropertyChangeEvent(this, property, oldValue, newValue));
             }
+        }
+
+        @Override
+        public String toString() {
+            return this.name+" "+this.count+" mal "+this.costs+" Euro";
         }
     }
 

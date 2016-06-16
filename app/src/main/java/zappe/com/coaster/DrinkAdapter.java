@@ -51,7 +51,7 @@ public class DrinkAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         View drinkView;
 
         if (convertView == null) {
@@ -89,6 +89,11 @@ public class DrinkAdapter extends BaseAdapter {
         drinkView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
+                Intent intent = new Intent(mContext, EditActivity.class);
+                intent.putExtra("drink", drink);
+                intent.putExtra("position", position);
+                ((Activity)mContext).startActivityForResult(intent, MainActivity.EDIT_RESULT);
+
                 return false;
             }
         });
