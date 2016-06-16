@@ -1,26 +1,28 @@
 package zappe.com.coaster;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.ArrayList;
 
-import zappe.com.coaster.DrinkHolder.DrinkModel;
-
-public class MainActivity extends AppCompatActivity implements PropertyChangeListener {
+public class MainActivity extends AppCompatActivity {
     TextView total, totalWithoutTip;
     Button addDrinkButton;
+
     DrinkHolder drinks;
-    DrinkAdapter adapter;
+    public DrinkAdapter adapter;
     SQLiteDatabaseHelper sqLiteDatabaseHelper;
 
     public final static int ADD_RESULT = 1;
@@ -38,8 +40,7 @@ public class MainActivity extends AppCompatActivity implements PropertyChangeLis
 
         sqLiteDatabaseHelper = new SQLiteDatabaseHelper(this);
 
-        drinks = new DrinkHolder(sqLiteDatabaseHelper);
-        drinks.addChangeListener(this);
+        drinks = new DrinkHolder(this, sqLiteDatabaseHelper);
 
         GridView drinkGrid = (GridView) findViewById(R.id.drinkGrid);
         if(drinkGrid != null) {
@@ -47,6 +48,39 @@ public class MainActivity extends AppCompatActivity implements PropertyChangeLis
             drinkGrid.setAdapter(adapter);
             calculateTotals();
         }
+    }
+
+    public void addDrink(View view) {
+        Intent intent = new Intent(this, AddActivity.class);
+        startActivityForResult(intent, ADD_RESULT);
+    }
+
+    private void calculateTotals() {
+        double totalAmount = drinks.getTotal();
+        double totalWithoutTipAmount = drinks.getTotalWithoutTip();
+        totalAmount = new BigDecimal(totalAmount).setScale(2, RoundingMode.HALF_UP).doubleValue();
+        totalWithoutTipAmount = new BigDecimal(totalWithoutTipAmount).setScale(2, RoundingMode.HALF_UP).doubleValue();
+
+        Resources res = getResources();
+        total.setText(String.format(res.getString(R.string.price_placeholder), totalAmount));
+        totalWithoutTip.setText(String.format(res.getString(R.string.price_placeholder), totalWithoutTipAmount));
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    public void paid(MenuItem item) {
+        ArrayList<DrinkModel> drinksArrayList = this.drinks.getDrinks();
+        for (int i=drinksArrayList.size()-1; i >= 0; i--) {
+            drinks.remove(i);
+        }
+        notifyChanged();
+
+        Toast.makeText(this, R.string.everything_paid, Toast.LENGTH_LONG).show();
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -57,7 +91,7 @@ public class MainActivity extends AppCompatActivity implements PropertyChangeLis
             if (drink != null) {
                 switch (resultCode) {
                     case ADD_RESULT:
-                        drinks.add(drink.name, drink.count, drink.costs);
+                        drinks.add(drink.name, drink.amount, drink.price);
                         break;
                     case EDIT_RESULT:
                         drinks.update(position, drink);
@@ -67,29 +101,14 @@ public class MainActivity extends AppCompatActivity implements PropertyChangeLis
                         break;
                 }
                 adapter.notifyDataSetChanged();
+                calculateTotals();
             }
         }
     }
 
-    private void calculateTotals() {
-        double totalAmount = drinks.getTotal();
-        double totalWithoutTipAmount = drinks.getTotalWithoutTip();
-        totalAmount = new BigDecimal(totalAmount).setScale(2, RoundingMode.HALF_UP).doubleValue();
-        totalWithoutTipAmount = new BigDecimal(totalWithoutTipAmount).setScale(2, RoundingMode.HALF_UP).doubleValue();
-
-        total.setText(String.format("%.2f", totalAmount)+" €");
-        totalWithoutTip.setText(String.format("%.2f", totalWithoutTipAmount)+" €");
-    }
-
-    @Override
-    public void propertyChange(PropertyChangeEvent event) {
+    public void notifyChanged() {
+        adapter.notifyDataSetChanged();
         calculateTotals();
-        System.out.println("Changed property: " + event.getPropertyName() + " [old -> "
-                + event.getOldValue() + "] | [new -> " + event.getNewValue() +"]");
     }
 
-    public void addDrink(View view) {
-        Intent intent = new Intent(this, AddActivity.class);
-        startActivityForResult(intent, ADD_RESULT);
-    }
 }

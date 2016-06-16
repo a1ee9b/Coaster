@@ -29,7 +29,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/costs_edit_textView"
         android:inputType="numberDecimal"
-        android:hint="@string/costs" />
+        android:hint="@string/price" />
 
     <EditText
         android:layout_width="match_parent"

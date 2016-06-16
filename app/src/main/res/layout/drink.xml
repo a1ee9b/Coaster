@@ -4,29 +4,38 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:clickable="true"
-    android:background="#009688">
+    android:background="#d6d7d7">
 
     <TextView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:text="@string/drink"
         android:id="@+id/drink_header_textView"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"
+        android:gravity="center_vertical" />
 
     <TextView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="@string/initial_amount"
         android:id="@+id/amount_textView"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"
+        android:gravity="center_vertical"
+        style="@style/Base.TextAppearance.AppCompat.Large"
+        android:textStyle="bold"
+        android:textSize="40dp" />
 
     <TextView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/costs"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:text="@string/price"
         android:id="@+id/cost_textView"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"
+        android:gravity="center_vertical" />
 </LinearLayout>

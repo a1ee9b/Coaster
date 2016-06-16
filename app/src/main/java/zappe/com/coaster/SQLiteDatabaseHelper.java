@@ -5,14 +5,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.graphics.Matrix;
-import android.support.v4.hardware.fingerprint.FingerprintManagerCompatApi23;
-import android.util.StringBuilderPrinter;
-import android.widget.Toast;
 
 import java.util.ArrayList;
-
-import zappe.com.coaster.DrinkHolder.DrinkModel;
 
 /**
  * Created by Jannik on 16.06.2016.
@@ -54,8 +48,8 @@ public class SQLiteDatabaseHelper {
 
         ContentValues values = new ContentValues();
         values.put(SQLHelper.name, drink.name);
-        values.put(SQLHelper.amount, drink.count);
-        values.put(SQLHelper.price, drink.costs);
+        values.put(SQLHelper.amount, drink.amount);
+        values.put(SQLHelper.price, drink.price);
 
         long id = db.insert(SQLHelper.TABLE_NAME, null, values);
         db.close();
@@ -68,8 +62,8 @@ public class SQLiteDatabaseHelper {
 
         ContentValues contentValues = new ContentValues();
         contentValues.put(SQLHelper.name, drink.name);
-        contentValues.put(SQLHelper.price, drink.costs);
-        contentValues.put(SQLHelper.amount, drink.count);
+        contentValues.put(SQLHelper.price, drink.price);
+        contentValues.put(SQLHelper.amount, drink.amount);
 
         String[] args = {String.valueOf(drink.id)};
 
@@ -85,7 +79,7 @@ public class SQLiteDatabaseHelper {
 
     public class SQLHelper extends SQLiteOpenHelper {
         private static final int VERSION = 1;
-        private static final String DATABSE_NAME = "drinksDB";
+        private static final String DATABASE_NAME = "drinksDB";
         private static final String TABLE_NAME = "drinks";
         private static final String id = "id";
         private static final String name = "name";
@@ -97,14 +91,13 @@ public class SQLiteDatabaseHelper {
         Context context;
 
         public SQLHelper(Context context) {
-            super(context, DATABSE_NAME, null , VERSION);
+            super(context, DATABASE_NAME, null , VERSION);
             this.context = context;
         }
 
         @Override
         public void onCreate(SQLiteDatabase db) {
             db.execSQL(CREATE_TABLE);
-            Toast.makeText(context, "db created", Toast.LENGTH_SHORT).show();
         }
 
         @Override

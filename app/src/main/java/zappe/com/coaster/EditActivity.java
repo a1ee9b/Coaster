@@ -8,12 +8,10 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import zappe.com.coaster.DrinkHolder.DrinkModel;
-
 public class EditActivity extends AppCompatActivity {
     DrinkModel drink;
     int position;
-    TextView nameView, amountView, costsView;
+    TextView nameView, amountView, priceView;
     Button saveEdit;
 
     @Override
@@ -23,35 +21,36 @@ public class EditActivity extends AppCompatActivity {
 
         nameView = (TextView) findViewById(R.id.name_edit_textView);
         amountView = (TextView) findViewById(R.id.amount_edit_textView);
-        costsView = (TextView) findViewById(R.id.costs_edit_textView);
+        priceView = (TextView) findViewById(R.id.costs_edit_textView);
         saveEdit = (Button) findViewById(R.id.save_edit_button);
 
-        drink = (DrinkModel) getIntent().getSerializableExtra("drink");
-        position = getIntent().getIntExtra("position", -1);
+        Intent intent = getIntent();
+        drink = (DrinkModel) intent.getSerializableExtra("drink");
+        position = intent.getIntExtra("position", -1);
 
         if (drink != null) {
             nameView.setText(drink.name);
-            amountView.setText(String.valueOf(drink.count));
-            costsView.setText(String.valueOf(drink.costs));
+            amountView.setText(String.valueOf(drink.amount));
+            priceView.setText(String.valueOf(drink.price));
         }
     }
 
     public void saveEdit(View view) {
         String name = nameView.getText().toString();
         if (!name.isEmpty()) {
-            drink.setName(name);
+            drink.name = name;
         } else {
             Toast.makeText(this, "Name darf nicht leer sein", Toast.LENGTH_SHORT).show();
         }
-        double costs = Double.valueOf(costsView.getText().toString());
-        if (costs > 0) {
-            drink.setCost(costs);
+        String price = priceView.getText().toString();
+        if (!price.isEmpty() || Double.valueOf(price) > 0) {
+            drink.price = Double.valueOf(price);
         } else {
             Toast.makeText(this, "Preis muss ueber 0 liegen", Toast.LENGTH_SHORT).show();
         }
-        int count = Integer.valueOf(amountView.getText().toString());
-        if (count > 0) {
-            drink.setCount(count);
+        String amount = amountView.getText().toString();
+        if (!amount.isEmpty() || Integer.valueOf(amount) > 0) {
+            drink.amount = Integer.valueOf(amount);
         } else {
             Toast.makeText(this, "Anzahl muss ueber 0 sein", Toast.LENGTH_SHORT).show();
         }

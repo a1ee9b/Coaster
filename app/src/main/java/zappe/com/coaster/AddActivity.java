@@ -7,8 +7,6 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
-
 public class AddActivity extends AppCompatActivity {
     TextView addDrinkName, addDrinkCosts;
 
@@ -36,7 +34,7 @@ public class AddActivity extends AppCompatActivity {
         if (!name.isEmpty() && !costsString.isEmpty()) {
             double costs = Double.valueOf(costsString);
             if (costs > 0) {
-                DrinkHolder.DrinkModel drinkModel = new DrinkHolder.DrinkModel(name, costs, count);
+                DrinkModel drinkModel = new DrinkModel(name, count, costs);
 
                 Intent intent = new Intent(this, MainActivity.class);
                 intent.putExtra("drink", drinkModel);

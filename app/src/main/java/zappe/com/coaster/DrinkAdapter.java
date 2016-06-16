@@ -1,30 +1,20 @@
 package zappe.com.coaster;
 
 import android.app.Activity;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
-import android.view.ContextMenu;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
-import android.view.SubMenu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.ArrayList;
-
-import zappe.com.coaster.DrinkHolder.DrinkModel;
 
 /**
- * Created by jannik on 15.06.16.
+ * Author jannik
  */
 public class DrinkAdapter extends BaseAdapter {
     private Context mContext;
@@ -59,23 +49,26 @@ public class DrinkAdapter extends BaseAdapter {
 
             drinkView = li.inflate(R.layout.drink, parent, false);
 
-            drinkView.setLayoutParams(new GridView.LayoutParams(GridView.AUTO_FIT, GridView.AUTO_FIT));
+            GridView gridView = (GridView) parent;
+            int columnWidth = gridView.getColumnWidth();
+
+            drinkView.setLayoutParams(new GridView.LayoutParams(GridView.AUTO_FIT, columnWidth));
             drinkView.setPadding(0, 20, 0, 20);
         }
         else {
-            drinkView = (View) convertView;
+            drinkView = convertView;
         }
 
-        final DrinkHolder.DrinkModel drink = drinks.get(position);
+        final DrinkModel drink = drinks.get(position);
 
         TextView name = (TextView) drinkView.findViewById(R.id.drink_header_textView);
         TextView costs = (TextView) drinkView.findViewById(R.id.cost_textView);
         final TextView amount = (TextView) drinkView.findViewById(R.id.amount_textView);
 
         name.setText(drink.name);
-        double costsRounded = new BigDecimal(drink.costs).setScale(2, RoundingMode.HALF_UP).doubleValue();;
-        costs.setText(String.format("%.2f", costsRounded)+" €");
-        amount.setText(String.valueOf(drink.count));
+        double priceRounded = new BigDecimal(drink.price).setScale(2, RoundingMode.HALF_UP).doubleValue();;
+        costs.setText(String.format("%.2f", priceRounded)+" €");
+        amount.setText(String.valueOf(drink.amount));
 
         drinkView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,7 +78,6 @@ public class DrinkAdapter extends BaseAdapter {
             }
         });
 
-//        ((Activity)mContext).registerForContextMenu(drinkView);
         drinkView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
