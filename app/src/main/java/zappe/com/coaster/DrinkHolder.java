@@ -1,5 +1,7 @@
 package zappe.com.coaster;
 
+import android.widget.Toast;
+
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.Serializable;
@@ -11,6 +13,7 @@ import java.util.List;
  */
 public class DrinkHolder {
     ArrayList<DrinkModel> drinks;
+    final SQLiteDatabaseHelper db;
     private static final List<PropertyChangeListener> listener = new ArrayList<PropertyChangeListener>();
 
     public static final String AMOUNT = "amountView";
@@ -18,15 +21,12 @@ public class DrinkHolder {
     public static final String ADDED = "added";
     public static final String REMOVED = "removed";
 
-    public DrinkHolder() {
-        drinks = new ArrayList<DrinkModel>();
-        add(new DrinkModel("Bier", 1.50, 3));
-        add(new DrinkModel("Jägermeister", 1.50, 4));
-        add(new DrinkModel("Wein", 4, 2));
-        add(new DrinkModel("Wasser", 1, 1));
+    public DrinkHolder(SQLiteDatabaseHelper db) {
+        this.db = db;
+        this.drinks = db.getDrinks();
     }
 
-    public ArrayList<DrinkModel> getDrinkList() {
+    public ArrayList<DrinkModel> getDrinks() {
         return drinks;
     }
 
@@ -34,8 +34,13 @@ public class DrinkHolder {
         return drinks.get(i);
     }
 
-    public DrinkHolder add(DrinkModel drink) {
-        drinks.add(drink);
+    public DrinkHolder add(String name, int amount, double costs) {
+        DrinkModel drink = new DrinkModel(name, costs, amount);
+        int id = (int) db.insertDrink(drink);
+        if (id > 0) {
+            drink.id = id;
+            drinks.add(drink);
+        }
 
         notifyListeners(this,
                 ADDED,
@@ -45,7 +50,27 @@ public class DrinkHolder {
         return this;
     }
 
+    public void update(int position, DrinkModel drink) {
+        db.updateDrink(drink);
+        drinks.get(position).update(drink);
+    }
+
+    public int increaseCount(int position) {
+        DrinkModel drinkModel = this.get(position);
+        int oldCount = drinkModel.count;
+        int count = drinkModel.increaseCount();
+        db.updateDrink(drinkModel);
+
+        notifyListeners(this,
+                AMOUNT,
+                String.valueOf(oldCount),
+                String.valueOf(count));
+
+        return count;
+    }
+
     public DrinkHolder remove(int i) {
+        db.deleteDrink(drinks.get(i));
         DrinkModel drink = drinks.remove(i);
 
         notifyListeners(this,
@@ -74,11 +99,16 @@ public class DrinkHolder {
     }
 
     public static final class DrinkModel implements Serializable {
+        int id;
         String name;
         double costs;
         int count;
 
         public DrinkModel(String name, double costs, int count) {
+            this(-1, name, costs, count);
+        }
+        public DrinkModel(int id, String name, double costs, int count) {
+            this.id = id;
             this.name = name;
             this.costs = costs;
             this.count = count;
@@ -93,15 +123,13 @@ public class DrinkHolder {
         }
 
         public int increaseCount() {
-            notifyListeners(this,
-                AMOUNT,
-                String.valueOf(this.count),
-                String.valueOf(this.count = count+1));
+            this.count += 1;
 
             return this.count;
         }
 
         public String setName(String name) {
+            this.name = name;
             if (!name.isEmpty()) {
                 notifyListeners(this,
                         AMOUNT,
@@ -129,7 +157,7 @@ public class DrinkHolder {
                 this.costs = costs;
 
                 notifyListeners(this,
-                    AMOUNT,
+                    COSTS,
                     String.valueOf(previousCosts),
                     String.valueOf(costs));
             }

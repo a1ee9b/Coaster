@@ -28,16 +28,16 @@ import zappe.com.coaster.DrinkHolder.DrinkModel;
  */
 public class DrinkAdapter extends BaseAdapter {
     private Context mContext;
-    private ArrayList<DrinkModel> drinks;
+    private final DrinkHolder drinks;
 
-    public DrinkAdapter(Context context, ArrayList<DrinkModel> drinks) {
+    public DrinkAdapter(Context context, DrinkHolder drinks) {
         this.mContext = context;
         this.drinks = drinks;
     }
 
     @Override
     public int getCount() {
-        return drinks.size();
+        return drinks.getDrinks().size();
     }
 
     @Override
@@ -80,7 +80,7 @@ public class DrinkAdapter extends BaseAdapter {
         drinkView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int count = drink.increaseCount();
+                int count = drinks.increaseCount(position);
                 amount.setText(String.valueOf(count));
             }
         });

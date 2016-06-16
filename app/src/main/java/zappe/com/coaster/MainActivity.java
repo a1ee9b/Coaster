@@ -1,9 +1,11 @@
 package zappe.com.coaster;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.TextView;
@@ -21,6 +23,7 @@ public class MainActivity extends AppCompatActivity implements PropertyChangeLis
     Button addDrinkButton;
     DrinkHolder drinks;
     DrinkAdapter adapter;
+    SQLiteDatabaseHelper sqLiteDatabaseHelper;
 
     public final static int EDIT_RESULT = 1;
     public final static int DELETE = 2;
@@ -36,60 +39,33 @@ public class MainActivity extends AppCompatActivity implements PropertyChangeLis
         addDrinkCosts = (TextView) findViewById(R.id.addDrinkCosts);
         addDrinkButton = (Button) findViewById(R.id.addDrinkButton);
 
-        drinks = new DrinkHolder();
+        sqLiteDatabaseHelper = new SQLiteDatabaseHelper(this);
+
+        drinks = new DrinkHolder(sqLiteDatabaseHelper);
         drinks.addChangeListener(this);
-        drinks.add(new DrinkModel("Anderes", 1.2, 1));
 
         GridView drinkGrid = (GridView) findViewById(R.id.drinkGrid);
         if(drinkGrid != null) {
-            adapter = new DrinkAdapter(this, drinks.getDrinkList());
+            adapter = new DrinkAdapter(this, drinks);
             drinkGrid.setAdapter(adapter);
+            calculateTotals();
         }
-
-        drinks.getDrinkList().get(1).setCost(2.32);
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        DrinkModel drink = (DrinkModel) data.getExtras().getSerializable("drink");
-        int position = data.getIntExtra("position", -1);
+        if (data != null) {
+            DrinkModel drink = (DrinkModel) data.getExtras().getSerializable("drink");
+            int position = data.getIntExtra("position", -1);
 
-        if (resultCode == EDIT_RESULT) {
-            drinks.get(position).update(drink);
-        } else if (resultCode == DELETE) {
-            drinks.remove(position);
-            adapter.notifyDataSetChanged();
-
-            Toast.makeText(this, "delete", Toast.LENGTH_LONG).show();
+            if (resultCode == EDIT_RESULT) {
+                drinks.update(position, drink);
+                adapter.notifyDataSetChanged();
+            } else if (resultCode == DELETE) {
+                drinks.remove(position);
+                adapter.notifyDataSetChanged();
+            }
         }
     }
-
-//    @Override
-//    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-//        super.onCreateContextMenu(menu, v, menuInfo);
-//
-//        getMenuInflater().inflate(R.menu.drink_menu, menu);
-//        menu.setHeaderTitle("Bearbeite das Getränk");
-//    }
-//
-//    @Override
-//    public boolean onContextItemSelected(MenuItem item) {
-//        switch (item.getItemId()) {
-//            case R.id.action_change_amount:
-////                drink.setCount()
-//                Toast.makeText(this, "Menge gewählt", Toast.LENGTH_LONG).show();
-//                break;
-//
-//            case R.id.action_change_costs:
-//                Toast.makeText(this, "Preis gewählt", Toast.LENGTH_LONG).show();
-//                break;
-//
-//            case R.id.action_delete_drink:
-//                Toast.makeText(this, "Löschen gewählt", Toast.LENGTH_LONG).show();
-//                break;
-//        }
-//
-//        return super.onContextItemSelected(item);
-//    }
 
     private void calculateTotals() {
         double totalAmount = drinks.getTotal();
@@ -110,15 +86,23 @@ public class MainActivity extends AppCompatActivity implements PropertyChangeLis
 
     public void addDrink(View view) {
         String name = addDrinkName.getText().toString();
-        double costs = Double.valueOf(addDrinkCosts.getText().toString());
+        String costsString = addDrinkCosts.getText().toString();
         int amount = 1;
 
-        if (!name.isEmpty() && costs > 0) {
-            DrinkModel drink = new DrinkModel(name, costs, amount);
-            drinks.add(drink);
+        if (!name.isEmpty() && !costsString.isEmpty()) {
 
-            addDrinkName.setText("");
-            addDrinkCosts.setText("");
+            double costs = Double.valueOf(costsString);
+            if (costs > 0) {
+                drinks.add(name, amount, costs);
+                addDrinkName.setText("");
+                addDrinkCosts.setText("");
+
+//                View view = this.getCurrentFocus();
+                if (view != null) {
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                }
+            }
         }
 
     }
