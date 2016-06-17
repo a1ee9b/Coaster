@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item android:title="@string/paid"
         android:id="@+id/action_paid"
-        android:icon="@android:drawable/ic_menu_agenda"
+        android:icon="@drawable/ic_check_circle_black_24dp"
         android:onClick="paid"
         app:showAsAction="ifRoom" />
 </menu>

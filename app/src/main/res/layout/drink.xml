@@ -1,24 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:clickable="true"
-    android:background="#d6d7d7">
+    android:elevation="@dimen/elevation"
+    android:background="@color/drinkBackground">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:id="@+id/innerLayout"
+        android:background="@drawable/ripple">
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_weight="1"
         android:text="@string/drink"
         android:id="@+id/drink_header_textView"
-        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textAppearance="?android:attr/textAppearanceLarge"
         android:layout_gravity="center_horizontal"
-        android:gravity="center_vertical" />
+        android:gravity="center_vertical"
+        android:textAlignment="center" />
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_weight="1"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="@string/initial_amount"
@@ -27,15 +35,19 @@
         android:gravity="center_vertical"
         style="@style/Base.TextAppearance.AppCompat.Large"
         android:textStyle="bold"
-        android:textSize="40dp" />
+        android:textSize="40sp"
+        android:textAlignment="center" />
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_weight="1"
         android:text="@string/price"
         android:id="@+id/cost_textView"
-        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textAppearance="?android:attr/textAppearanceLarge"
         android:layout_gravity="center_horizontal"
-        android:gravity="center_vertical" />
+        android:gravity="center_vertical"
+        android:textAlignment="center" />
+
+    </LinearLayout>
 </LinearLayout>

@@ -14,6 +14,7 @@ public class AddActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
+        setTitle(R.string.add);
 
         addDrinkName = (TextView) findViewById(R.id.addDrinkName);
         addDrinkCosts = (TextView) findViewById(R.id.addDrinkCosts);
@@ -25,10 +26,10 @@ public class AddActivity extends AppCompatActivity {
         int count = 1;
 
         if (name.isEmpty()) {
-            Toast.makeText(this, "Name darf nicht leer sein", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.name_must_not_be_empty, Toast.LENGTH_SHORT).show();
         }
         if (costsString.isEmpty()) {
-            Toast.makeText(this, "Preis muss ueber 0 liegen", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.price_must_be_over_0, Toast.LENGTH_SHORT).show();
         }
 
         if (!name.isEmpty() && !costsString.isEmpty()) {

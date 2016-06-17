@@ -10,15 +10,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.GridView;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import java.math.BigDecimal;
-import java.math.RoundingMode;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
-    TextView total, totalWithoutTip;
     Button addDrinkButton;
 
     DrinkHolder drinks;
@@ -34,8 +30,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        total = (TextView) findViewById(R.id.totalTextView);
-        totalWithoutTip = (TextView) findViewById(R.id.totalWithoutTip);
         addDrinkButton = (Button) findViewById(R.id.addDrinkButton);
 
         sqLiteDatabaseHelper = new SQLiteDatabaseHelper(this);
@@ -56,14 +50,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void calculateTotals() {
+        Resources res = getResources();
+
         double totalAmount = drinks.getTotal();
         double totalWithoutTipAmount = drinks.getTotalWithoutTip();
-        totalAmount = new BigDecimal(totalAmount).setScale(2, RoundingMode.HALF_UP).doubleValue();
-        totalWithoutTipAmount = new BigDecimal(totalWithoutTipAmount).setScale(2, RoundingMode.HALF_UP).doubleValue();
 
-        Resources res = getResources();
-        total.setText(String.format(res.getString(R.string.price_placeholder), totalAmount));
-        totalWithoutTip.setText(String.format(res.getString(R.string.price_placeholder), totalWithoutTipAmount));
+        String total = res.getString(R.string.total);
+
+        String totalAmountString = NumberFormat.getCurrencyInstance().format(totalWithoutTipAmount);
+        String totalWithTipAmountString = NumberFormat.getCurrencyInstance().format(totalAmount);
+
+        setTitle(total+" "+totalAmountString+" ("+totalWithTipAmountString+")");
     }
 
     @Override

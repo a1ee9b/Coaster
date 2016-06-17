@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">Coaster</string>
+    <string name="drink">Getränk</string>
+    <string name="price">Preis</string>
+    <string name="with_tip">Mit Trinkgeld</string>
+    <string name="zero_price">0€</string>
+    <string name="total">Summe</string>
+    <string name="initial_amount">1</string>
+    <string name="add">Hinzufügen</string>
+    <string name="change_amount">Menge ändern</string>
+    <string name="change_costs">Preis ändern</string>
+    <string name="delete">Löschen</string>
+    <string name="amount">Menge</string>
+    <string name="save">Speichern</string>
+    <string name="price_placeholder">%.2f €</string>
+    <string name="paid">Bezahlt</string>
+    <string name="edit">Bearbeiten:</string>
+    <string name="everything_paid">Alles bezahlt. Super!</string>
+    <string name="name_must_not_be_empty">Name darf nicht leer sein</string>
+    <string name="price_must_be_over_0">Preis muss ueber 0 liegen</string>
+    <string name="amount_must_be_over_0">Anzahl muss ueber 0 sein</string>
+</resources>

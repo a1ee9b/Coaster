@@ -18,6 +18,7 @@ public class EditActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit);
+        setTitle(R.string.edit);
 
         nameView = (TextView) findViewById(R.id.name_edit_textView);
         amountView = (TextView) findViewById(R.id.amount_edit_textView);
@@ -40,19 +41,19 @@ public class EditActivity extends AppCompatActivity {
         if (!name.isEmpty()) {
             drink.name = name;
         } else {
-            Toast.makeText(this, "Name darf nicht leer sein", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.name_must_not_be_empty, Toast.LENGTH_SHORT).show();
         }
         String price = priceView.getText().toString();
         if (!price.isEmpty() || Double.valueOf(price) > 0) {
             drink.price = Double.valueOf(price);
         } else {
-            Toast.makeText(this, "Preis muss ueber 0 liegen", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.price_must_be_over_0, Toast.LENGTH_SHORT).show();
         }
         String amount = amountView.getText().toString();
         if (!amount.isEmpty() || Integer.valueOf(amount) > 0) {
             drink.amount = Integer.valueOf(amount);
         } else {
-            Toast.makeText(this, "Anzahl muss ueber 0 sein", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.amount_must_be_over_0, Toast.LENGTH_SHORT).show();
         }
 
         Intent intent = new Intent(this, MainActivity.class);
