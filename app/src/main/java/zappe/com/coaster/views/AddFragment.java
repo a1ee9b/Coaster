@@ -1,4 +1,4 @@
-package zappe.com.coaster;
+package zappe.com.coaster.views;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -9,6 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import zappe.com.coaster.R;
+import zappe.com.coaster.views.MainActivity;
 
 
 public class AddFragment extends DialogFragment {
@@ -21,6 +24,8 @@ public class AddFragment extends DialogFragment {
 
         final View view = inflater.inflate(R.layout.fragment_add, null);
         nameView = (EditText) view.findViewById(R.id.drink_name_textView);
+        nameView.requestFocus();
+        nameView.callOnClick();
         priceView = (EditText) view.findViewById(R.id.drink_costs_textView);
 
         builder.setView(view)

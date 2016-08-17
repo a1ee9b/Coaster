@@ -1,4 +1,4 @@
-package zappe.com.coaster;
+package zappe.com.coaster.drinks;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -7,6 +7,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
+
+import zappe.com.coaster.drinks.DrinkModel;
 
 /**
  * Created by Jannik on 16.06.2016.

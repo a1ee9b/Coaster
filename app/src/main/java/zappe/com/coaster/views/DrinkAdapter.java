@@ -1,4 +1,4 @@
-package zappe.com.coaster;
+package zappe.com.coaster.views;
 
 import android.app.Activity;
 import android.app.DialogFragment;
@@ -6,8 +6,6 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
-import android.content.Intent;
-import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +15,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.text.NumberFormat;
+
+import zappe.com.coaster.R;
+import zappe.com.coaster.drinks.DrinkHolder;
+import zappe.com.coaster.drinks.DrinkModel;
 
 /**
  * Author jannik
@@ -109,5 +111,4 @@ public class DrinkAdapter extends BaseAdapter {
 
         return drinkView;
     }
-
 }

@@ -18,7 +18,7 @@
             android:id="@+id/drink_name_textView"
             android:hint="@string/drink"
             android:selectAllOnFocus="true"
-            android:layout_width="216dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
         <LinearLayout

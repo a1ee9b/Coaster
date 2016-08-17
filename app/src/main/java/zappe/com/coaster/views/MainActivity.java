@@ -1,4 +1,4 @@
-package zappe.com.coaster;
+package zappe.com.coaster.views;
 
 import android.app.DialogFragment;
 import android.app.Fragment;
@@ -11,6 +11,10 @@ import android.widget.GridView;
 import android.widget.TextView;
 
 import java.text.NumberFormat;
+
+import zappe.com.coaster.R;
+import zappe.com.coaster.drinks.DrinkHolder;
+import zappe.com.coaster.drinks.SQLiteDatabaseHelper;
 
 public class MainActivity extends AppCompatActivity {
     TextView subtotal;
