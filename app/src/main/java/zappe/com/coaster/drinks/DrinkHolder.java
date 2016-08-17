@@ -1,6 +1,9 @@
-package zappe.com.coaster;
+package zappe.com.coaster.drinks;
 
 import java.util.ArrayList;
+
+import zappe.com.coaster.drinks.DrinkModel;
+import zappe.com.coaster.views.MainActivity;
 
 /**
  * Author jannik
@@ -57,7 +60,7 @@ public class DrinkHolder {
         return this;
     }
 
-    public double getTotalWithoutTip() {
+    public double getSubtotal() {
         double total = 0;
         for (int i = 0; i < drinks.size(); i++) {
             DrinkModel drink = drinks.get(i);
@@ -69,7 +72,7 @@ public class DrinkHolder {
     public double getTotal() {
 //        Be cheap, use 7%
         double tip = 1.07;
-        double total = getTotalWithoutTip();
+        double total = getSubtotal();
 
         return total*tip;
     }

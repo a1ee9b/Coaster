@@ -1,23 +1,24 @@
-package zappe.com.coaster;
+package zappe.com.coaster.views;
 
 import android.app.Activity;
+import android.app.DialogFragment;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
-import android.content.Intent;
-import android.content.res.Resources;
-import android.content.res.TypedArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.LinearInterpolator;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.text.NumberFormat;
+
+import zappe.com.coaster.R;
+import zappe.com.coaster.drinks.DrinkHolder;
+import zappe.com.coaster.drinks.DrinkModel;
 
 /**
  * Author jannik
@@ -53,7 +54,6 @@ public class DrinkAdapter extends BaseAdapter {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         View drinkView;
-        Resources res = mContext.getResources();
 
         if (position == drinks.getDrinks().size()) {
             LayoutInflater li = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -87,25 +87,28 @@ public class DrinkAdapter extends BaseAdapter {
             innerLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    int count = drinks.increaseCount(position);
-                    amount.setText(String.valueOf(count));
+                int count = drinks.increaseCount(position);
+                amount.setText(String.valueOf(count));
                 }
             });
 
             innerLayout.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
-                    Intent intent = new Intent(mContext, EditActivity.class);
-                    intent.putExtra("drink", drink);
-                    intent.putExtra("position", position);
-                    ((Activity) mContext).startActivityForResult(intent, MainActivity.EDIT_RESULT);
+                FragmentManager manager = ((Activity) mContext).getFragmentManager();
+                FragmentTransaction fragmentTransaction = manager.beginTransaction();
+                Fragment previousFragment = manager.findFragmentByTag("edit_drink");
+                if (previousFragment != null) {
+                    fragmentTransaction.remove(previousFragment);
+                }
 
-                    return false;
+                DialogFragment editFragment = EditFragment.newInstance(drink, position);
+                editFragment.show(fragmentTransaction, "edit_drink");
+                return false;
                 }
             });
         }
 
         return drinkView;
     }
-
 }

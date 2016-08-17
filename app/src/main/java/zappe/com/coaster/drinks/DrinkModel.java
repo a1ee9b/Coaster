@@ -1,15 +1,15 @@
-package zappe.com.coaster;
+package zappe.com.coaster.drinks;
 
 import java.io.Serializable;
 
 /**
  * Author Jannik
  */
-class DrinkModel implements Serializable {
-    int id;
-    String name;
-    double price;
-    int amount;
+public class DrinkModel implements Serializable {
+    public int id;
+    public String name;
+    public double price;
+    public int amount;
 
     public DrinkModel(String name, int amount, double price) {
         this(-1, name, price, amount);

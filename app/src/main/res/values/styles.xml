@@ -1,15 +1,92 @@
 <resources>
-
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light">
-        <item name="android:actionBarStyle">@style/ActionBarTheme</item>
-
+    <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="android:colorPrimary">@color/colorPrimary</item>
         <item name="android:colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="android:colorAccent">@color/colorAccent</item>
+
+        <!--<item name="android:textColor">@color/text_color</item>-->
+
+        <item name="android:alertDialogTheme">@style/MyAlertDialogTheme</item>
+        <item name="android:alertDialogStyle">@style/MyAlertDialogStyle</item>
+
+        <!--<item name="android:editTextStyle">@style/App_EditTextStyle</item>-->
+        <!--<item name="android:colorBackground">@color/background</item>-->
+        <!--<item name="android:textColorPrimary">@color/primary_text_material_light</item>-->
+    </style>
+    
+    <style name="receipt_row">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:fontFamily">serif-monospace</item>
+        <item name="android:textSize">@dimen/text_size_large</item>
     </style>
 
-    <style name="ActionBarTheme" parent="@android:style/Widget.ActionBar">
-        <item name="android:background">#607D8B</item>
+    <style name="receipt_row.right">
+        <item name="android:gravity">right</item>
+    </style>
+
+    <!--<style name="App_EditTextStyle" parent="@android:style/Widget.EditText">-->
+        <!--<item name="android:background">@color/background</item>-->
+        <!--<item name="android:textColor">@color/text_color</item>-->
+    <!--</style>-->
+
+
+    <style name="MyBorderlessButton">
+        <!-- Set background drawable and text size of the buttons here -->
+        <!--<item name="android:background">...</item>-->
+        <!--<item name="android:textSize">...</item>-->
+    </style>
+
+    <style name="MyButtonBar">
+        <!-- Define a background for the button bar and a divider between the buttons here -->
+        <!--<item name="android:divider">....</item>-->
+        <!--<item name="android:dividerPadding">...</item>-->
+        <!--<item name="android:showDividers">...</item>-->
+        <!--<item name="android:background">...</item>-->
+    </style>
+
+    <style name="MyAlertDialogTitle">
+        <!--<item name="android:textSize">60sp</item>-->
+        <!--<item name="android:maxLines">1</item>-->
+        <!--<item name="android:scrollHorizontally">true</item>-->
+    </style>
+
+    <style name="MyAlertTextAppearance">
+        <!-- Set text size and color of title and message here -->
+        <!--<item name="android:textSize"> ... </item>-->
+        <!--<item name="android:textColor">...</item>-->
+    </style>
+
+    <style name="MyAlertDialogTheme" parent="Theme.AppCompat.Dialog">
+        <!--<item name="android:windowBackground">@color/background</item>-->
+        <!--<item name="android:windowTitleStyle">@style/MyAlertDialogTitle</item>-->
+        <!--<item name="android:windowContentOverlay">@null</item>-->
+        <!--<item name="android:windowMinWidthMajor">@android:dimen/dialog_min_width_major</item>-->
+        <!--<item name="android:windowMinWidthMinor">@android:dimen/dialog_min_width_minor</item>-->
+        <!--<item name="android:windowIsFloating">true</item>-->
+        <!--<item name="android:textAppearanceMedium">@style/MyAlertTextAppearance</item>-->
+        <!-- If you don't want your own button bar style use
+                @android:style/Holo.Light.ButtonBar.AlertDialog
+                and
+                ?android:attr/borderlessButtonStyle
+        instead of @style/MyButtonBar and @style/MyBorderlessButton
+    -->
+        <!--<item name="android:buttonBarStyle">@style/MyButtonBar</item>-->
+        <!--<item name="android:buttonBarButtonStyle">@style/MyBorderlessButton</item>-->
+    </style>
+
+    <style name="MyAlertDialogStyle">
+        <!-- Define background colors of title, message, buttons, etc. here -->
+        <!--<item name="android:fullDark">@color/background</item>-->
+        <!--<item name="android:topDark">...</item>
+        <item name="android:centerDark">...</item>
+        <item name="android:bottomDark">...</item>
+        <item name="android:fullBright">...</item>
+        <item name="android:topBright">...</item>
+        <item name="android:centerBright">...</item>
+        <item name="android:bottomBright">...</item>
+        <item name="android:bottomMedium">...</item>
+        <item name="android:centerMedium">...</item>-->
     </style>
 </resources>
