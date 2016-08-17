@@ -1,8 +1,9 @@
 <resources>
-    <!-- Default screen margins, per the Android Design guidelines. -->
-    <dimen name="activity_horizontal_margin">10dp</dimen>
-    <dimen name="activity_vertical_margin">10dp</dimen>
-    <dimen name="grid_spacing">10dp</dimen>
+    <dimen name="margin">10dp</dimen>
     <dimen name="elevation">8dp</dimen>
-    <dimen name="touch_raise">8dp</dimen>
+    <dimen name="text_size_large">16dp</dimen>
+
+    <dimen name="receipt_dash_size">2dp</dimen>
+    <dimen name="receipt_dash_size_inverted">-2dp</dimen>
+    <dimen name="receipt_dash_gap">10dp</dimen>
 </resources>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:left="@dimen/receipt_dash_size_inverted"
+        android:right="@dimen/receipt_dash_size_inverted"
+        android:bottom="@dimen/receipt_dash_size_inverted">
+        <shape android:shape="rectangle">
+            <stroke
+                android:width="@dimen/receipt_dash_size"
+                android:color="@color/text_color"
+                android:dashGap="@dimen/receipt_dash_gap"
+                android:dashWidth="@dimen/receipt_dash_gap" />
+            <solid android:color="@color/receipt_background" />
+        </shape>
+    </item>
+
+</layer-list>

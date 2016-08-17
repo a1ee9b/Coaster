@@ -35,6 +35,7 @@
         android:gravity="center_vertical"
         style="@style/Base.TextAppearance.AppCompat.Large"
         android:textStyle="bold"
+        android:textColor="@color/text_color"
         android:textSize="40sp"
         android:textAlignment="center" />
 
