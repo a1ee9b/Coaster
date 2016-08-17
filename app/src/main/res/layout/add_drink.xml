@@ -11,8 +11,7 @@
         android:layout_height="match_parent"
         android:id="@+id/innerLayout"
         android:orientation="vertical"
-        android:onClick="addDrink"
-        android:background="@drawable/ripple">
+        android:onClick="addDrink">
 
         <ImageView
             android:layout_width="75dp"
