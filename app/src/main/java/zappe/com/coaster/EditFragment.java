@@ -59,8 +59,11 @@ public class EditFragment extends DialogFragment {
                 @Override
                 public void onClick(View v) {
                     int amount = Integer.valueOf(String.valueOf(amountView.getText()));
-                    amount = amount - 1;
-                    amountView.setText(String.valueOf(amount));
+
+                    if (amount > 1) {
+                        amount = amount - 1;
+                        amountView.setText(String.valueOf(amount));
+                    }
                 }
             });
         }
