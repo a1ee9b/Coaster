@@ -10,8 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:id="@+id/innerLayout"
-        android:background="@drawable/ripple">
+        android:id="@+id/innerLayout">
 
     <TextView
         android:layout_width="match_parent"
@@ -35,6 +34,7 @@
         android:gravity="center_vertical"
         style="@style/Base.TextAppearance.AppCompat.Large"
         android:textStyle="bold"
+        android:textColor="@color/text_color"
         android:textSize="40sp"
         android:textAlignment="center" />
 
