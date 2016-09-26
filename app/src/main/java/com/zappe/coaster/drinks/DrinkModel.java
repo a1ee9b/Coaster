@@ -1,4 +1,4 @@
-package zappe.com.coaster.drinks;
+package com.zappe.coaster.drinks;
 
 import java.io.Serializable;
 

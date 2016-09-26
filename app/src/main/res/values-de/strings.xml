@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Coaster</string>
+    <string name="app_name">Bierdeckel</string>
     <string name="drink">Getränk</string>
     <string name="price">Preis</string>
     <string name="zero_price">0€</string>

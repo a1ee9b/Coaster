@@ -1,4 +1,4 @@
-package zappe.com.coaster.views;
+package com.zappe.coaster.views;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -10,8 +10,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import zappe.com.coaster.R;
-import zappe.com.coaster.views.MainActivity;
+import com.zappe.coaster.R;
 
 
 public class AddFragment extends DialogFragment {

@@ -1,4 +1,4 @@
-package zappe.com.coaster.views;
+package com.zappe.coaster.views;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -12,8 +12,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import zappe.com.coaster.R;
-import zappe.com.coaster.drinks.DrinkModel;
+import com.zappe.coaster.R;
+import com.zappe.coaster.drinks.DrinkModel;
 
 public class EditFragment extends DialogFragment {
     DrinkModel drink;

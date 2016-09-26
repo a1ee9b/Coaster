@@ -1,4 +1,4 @@
-package zappe.com.coaster.views;
+package com.zappe.coaster.views;
 
 import android.app.Activity;
 import android.app.DialogFragment;
@@ -16,9 +16,9 @@ import android.widget.TextView;
 
 import java.text.NumberFormat;
 
-import zappe.com.coaster.R;
-import zappe.com.coaster.drinks.DrinkHolder;
-import zappe.com.coaster.drinks.DrinkModel;
+import com.zappe.coaster.R;
+import com.zappe.coaster.drinks.DrinkHolder;
+import com.zappe.coaster.drinks.DrinkModel;
 
 /**
  * Author jannik
@@ -39,7 +39,7 @@ public class DrinkAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int position) {
-        if (position == drinks.getDrinks().size()) {
+        if (position >= drinks.getDrinks().size()) {
             return null;
         } else {
             return drinks.get(position);
@@ -53,7 +53,7 @@ public class DrinkAdapter extends BaseAdapter {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        View drinkView;
+        final View drinkView;
 
         if (position == drinks.getDrinks().size()) {
             LayoutInflater li = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -75,36 +75,40 @@ public class DrinkAdapter extends BaseAdapter {
 
             final DrinkModel drink = drinks.get(position);
 
-            LinearLayout innerLayout = (LinearLayout) drinkView.findViewById(R.id.innerLayout);
-            TextView name = (TextView) drinkView.findViewById(R.id.drink_header_textView);
-            TextView costs = (TextView) drinkView.findViewById(R.id.cost_textView);
+            final LinearLayout outerLayout = (LinearLayout) drinkView.findViewById(R.id.outerLayout);
+            final TextView name = (TextView) drinkView.findViewById(R.id.drink_header_textView);
+            final TextView costs = (TextView) drinkView.findViewById(R.id.cost_textView);
             final TextView amount = (TextView) drinkView.findViewById(R.id.amount_textView);
 
             name.setText(drink.name);
             costs.setText(NumberFormat.getCurrencyInstance().format(drink.price));
             amount.setText(String.valueOf(drink.amount));
 
-            innerLayout.setOnClickListener(new View.OnClickListener() {
+            outerLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                int count = drinks.increaseCount(position);
-                amount.setText(String.valueOf(count));
+                    int count = drinks.increaseCount(position);
+                    amount.setText(String.valueOf(count));
+//                    AnimatorSet set = (AnimatorSet) AnimatorInflater.loadAnimator(mContext,
+//                            R.animator.animate_bg);
+//                    set.setTarget(amount);
+//                    set.start();
                 }
             });
 
-            innerLayout.setOnLongClickListener(new View.OnLongClickListener() {
+            outerLayout.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
-                FragmentManager manager = ((Activity) mContext).getFragmentManager();
-                FragmentTransaction fragmentTransaction = manager.beginTransaction();
-                Fragment previousFragment = manager.findFragmentByTag("edit_drink");
-                if (previousFragment != null) {
-                    fragmentTransaction.remove(previousFragment);
-                }
+                    FragmentManager manager = ((Activity) mContext).getFragmentManager();
+                    FragmentTransaction fragmentTransaction = manager.beginTransaction();
+                    Fragment previousFragment = manager.findFragmentByTag("edit_drink");
+                    if (previousFragment != null) {
+                        fragmentTransaction.remove(previousFragment);
+                    }
 
-                DialogFragment editFragment = EditFragment.newInstance(drink, position);
-                editFragment.show(fragmentTransaction, "edit_drink");
-                return false;
+                    DialogFragment editFragment = EditFragment.newInstance(drink, position);
+                    editFragment.show(fragmentTransaction, "edit_drink");
+                    return false;
                 }
             });
         }
