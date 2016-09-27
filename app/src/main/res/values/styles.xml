@@ -7,14 +7,21 @@
 
         <!--<item name="android:textColor">@color/text_color</item>-->
 
-        <item name="android:alertDialogTheme">@style/MyAlertDialogTheme</item>
-        <item name="android:alertDialogStyle">@style/MyAlertDialogStyle</item>
+        <!--<item name="android:alertDialogTheme">@style/MyAlertDialogTheme</item>-->
+        <!--<item name="android:alertDialogStyle">@style/MyAlertDialogStyle</item>-->
 
         <!--<item name="android:editTextStyle">@style/App_EditTextStyle</item>-->
         <!--<item name="android:colorBackground">@color/background</item>-->
         <!--<item name="android:textColorPrimary">@color/primary_text_material_light</item>-->
+        <item name="alertDialogTheme">@style/AppCompatAlertDialogStyle</item>
     </style>
-    
+
+    <style name="AppCompatAlertDialogStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorAccent">@color/text_color</item>
+        <item name="android:textColorPrimary">@color/text_color</item>
+        <item name="android:background">@color/dialog_background</item>
+    </style>
+
     <style name="receipt_row">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_weight">1</item>
@@ -76,7 +83,7 @@
         <!--<item name="android:buttonBarButtonStyle">@style/MyBorderlessButton</item>-->
     </style>
 
-    <style name="MyAlertDialogStyle">
+    <style name="MyAlertDialogStyle" parent="Theme.AppCompat.Dialog">
         <!-- Define background colors of title, message, buttons, etc. here -->
         <!--<item name="android:fullDark">@color/background</item>-->
         <!--<item name="android:topDark">...</item>

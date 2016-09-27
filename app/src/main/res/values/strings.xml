@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Coaster</string>
+    <string name="app_name">BeerTrack</string>
     <string name="drink">Drink</string>
     <string name="price">Price</string>
     <string name="zero_price">0$</string>

@@ -1,9 +1,8 @@
-package zappe.com.coaster.drinks;
+package com.zappe.coaster.drinks;
 
 import java.util.ArrayList;
 
-import zappe.com.coaster.drinks.DrinkModel;
-import zappe.com.coaster.views.MainActivity;
+import com.zappe.coaster.views.MainActivity;
 
 /**
  * Author jannik
